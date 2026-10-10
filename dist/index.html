@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#1b4e45"><meta name="description" content="Личный учёт вложений по людям и лотам, расчёт периодов и история.">
+  <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./icons/icon-192.png"><link rel="icon" href="./icons/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css">
+  <title>Лоты · Учёт вложений</title>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="#overview"><span class="brand-icon">л.</span><span>Лоты<small>Личный учёт вложений</small></span></a>
+    <nav aria-label="Разделы"><a href="#overview" data-nav="overview"><span>◈</span>Обзор</a><a href="#people" data-nav="people"><span>♧</span>Люди</a><a href="#lots" data-nav="lots"><span>▦</span>Лоты и периоды</a><a href="#history" data-nav="history"><span>◷</span>История</a><a href="#data" data-nav="data"><span>⇅</span>Мои данные</a></nav>
+    <div class="side-bottom"><div class="local-dot"></div><b>Данные на устройстве</b><p>Сохраняются автоматически.<br>Сделайте резервную копию.</p><button class="text-button" id="install-btn" hidden>Установить приложение ↗</button></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><span>ВАШ ПОРТФЕЛЬ</span><div><span id="connection" class="connection">● Онлайн</span><span id="today-label"></span></div></header>
+    <main id="main" tabindex="-1"><div class="loading">Загружаем ваши расчёты…</div></main>
+    <footer>Лоты · Учёт в рублях <span>Ставка за весь период · Округление до целого рубля вниз</span></footer>
+  </div>
+</div>
+<dialog id="modal"><div id="modal-body"></div></dialog><div id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="./app.js"></script>
+</body></html>

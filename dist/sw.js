@@ -1,0 +1,6 @@
+const PREFIX='lot-ledger-pwa:'+self.registration.scope+':';
+const CACHE=PREFIX+'v1';
+const ASSETS=['./','./index.html','./styles.css','./app.js','./core.js','./store.js','./seed.json','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/icon.svg'];
+self.addEventListener('install',e=>e.waitUntil((async()=>{const cache=await caches.open(CACHE);for(const url of ASSETS){const r=await fetch(url,{cache:'reload'});if(!r.ok||r.redirected||r.headers.get('content-type')?.includes('text/html')&&!['./','./index.html'].includes(url))throw new Error('Asset unavailable');await cache.put(url,r);}await self.skipWaiting();})()));
+self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const k of await caches.keys())if(k.startsWith(PREFIX)&&k!==CACHE)await caches.delete(k);await self.clients.claim();})()));
+self.addEventListener('fetch',e=>{if(e.request.method!=='GET'||new URL(e.request.url).origin!==self.location.origin)return;const url=new URL(e.request.url);if(!ASSETS.some(a=>new URL(a,self.registration.scope).pathname===url.pathname))return;e.respondWith((async()=>{const cache=await caches.open(CACHE);return await cache.match(e.request,{ignoreSearch:true})||fetch(e.request);})());});
