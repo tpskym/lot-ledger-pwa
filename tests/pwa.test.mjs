@@ -28,7 +28,7 @@ test('service worker precaches assets and serves cached modules offline',async()
     fetched.push(url);const file=url==='./'?'index.html':url;
     const bytes=await readFile(new URL(file,root));
     return {ok:true,redirected:false,headers:{get:()=>file.endsWith('.html')?'text/html':'application/octet-stream'},bytes};
-  },caches:{open:async(name)=>{assert.equal(name,'lot-ledger-pwa:'+scope+':v1');return cache;},keys:async()=>names,delete:async(name)=>removed.push(name)},self:{registration:{scope},location:{origin:'https://example.github.io'},skipWaiting:async()=>{},clients:{claim:async()=>{}},addEventListener:(name,fn)=>handlers[name]=fn}};
+  },caches:{open:async(name)=>{const prefix='lot-ledger-pwa:'+scope+':';assert.ok(name.startsWith(prefix));assert.match(name.slice(prefix.length),/^v\d+$/);return cache;},keys:async()=>names,delete:async(name)=>removed.push(name)},self:{registration:{scope},location:{origin:'https://example.github.io'},skipWaiting:async()=>{},clients:{claim:async()=>{}},addEventListener:(name,fn)=>handlers[name]=fn}};
   vm.runInNewContext(await readFile(new URL('sw.js',root),'utf8'),context);
   let pending;
   handlers.install({waitUntil:p=>pending=p});await pending;

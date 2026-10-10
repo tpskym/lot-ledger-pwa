@@ -1,5 +1,5 @@
 const PREFIX='lot-ledger-pwa:'+self.registration.scope+':';
-const CACHE=PREFIX+'v1';
+const CACHE=PREFIX+'v2';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./core.js','./store.js','./seed.json','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/icon.svg'];
 self.addEventListener('install',e=>e.waitUntil((async()=>{const cache=await caches.open(CACHE);for(const url of ASSETS){const r=await fetch(url,{cache:'reload'});if(!r.ok||r.redirected||r.headers.get('content-type')?.includes('text/html')&&!['./','./index.html'].includes(url))throw new Error('Asset unavailable');await cache.put(url,r);}await self.skipWaiting();})()));
 self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const k of await caches.keys())if(k.startsWith(PREFIX)&&k!==CACHE)await caches.delete(k);await self.clients.claim();})()));
